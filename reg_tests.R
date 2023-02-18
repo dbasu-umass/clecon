@@ -9,10 +9,6 @@ reg_tests <- function(x,y){
   # x: price vector
   # y: value vector
   
-  # --- Testing
-  # x <- res_si1$`Prices of Production (Absolute)`
-  # y <- res_si1$Values
-  
   # Remove any zero prices
   mydat <- data.frame(x=as.vector(x),y=as.vector(y))
   mydat1 <- mydat[mydat$x!=0, ]
