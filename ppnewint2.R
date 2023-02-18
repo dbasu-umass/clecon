@@ -9,7 +9,7 @@
 
 ppnewint2 <- function(A, l, w, v, Q){
   
-  # -- Inputs
+  # -- Inputs to the function
   # A (nxn): input output matrix
   # l (1Xn): direct labor vector
   # w (1xn): nominal wage rate vector

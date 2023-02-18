@@ -9,7 +9,7 @@
 
 ppnewint3 <- function(A, Ap, l, lp, w, v, Q, Qp){
   
-  # -- Inputs
+  # -- Inputs to the function
   # A (nxn): input output matrix
   # Ap (mxm): input output matrix for productive sectors
   # l (1Xn): direct labor vector

@@ -9,7 +9,7 @@
 
 ppnewint4 <- function(A, Ap, l, lp, w, wp, v, Q, Qp){
   
-  # -- Inputs
+  # -- Inputs to the function
   # A (nxn): input output matrix
   # Ap (mxm): input output matrix for productive sectors
   # l (1Xn): direct labor vector
@@ -19,16 +19,6 @@ ppnewint4 <- function(A, Ap, l, lp, w, wp, v, Q, Qp){
   # v: value of labor power (scalar)
   # Q (nx1): gross output vector
   # Qp (mx1): gross output vector for productive sectors
-  
-  A <- res_data$Ahat
-  Ap <- res_data$Aphat
-  l <- res_data$l
-  lp <- res_data$lp
-  w <- res_data$wagevector_all
-  wp <- res_data$wagevector
-  v <- res_data$vlp
-  Q <- res_data$Q
-  Qp <- res_data$Qp
   
   if(v>=(lp%*%(diag(wp))%*%Qp)/(l%*%(diag(w))%*%Q)){
     stop("Uniform rate of profit cannot be computed")
