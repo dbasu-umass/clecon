@@ -64,10 +64,16 @@ nonreg_tests <- function(x,y,w,w_avg,mev,Q){
   
   
   # ---- Results ------- #
-  dist_result <- c(rmse_rel_all, mad_rel_all,
-                   mawd_rel_all, cdm_rel_all,
-                   alpha_rel_all,d_rel_all)
   # Return result
-  return(dist_result)
+  return(
+    list(
+      "RMSE" = rmse_rel_all, 
+      "MAD" = mad_rel_all,
+      "MAWD" = mawd_rel_all, 
+      "CDM" = cdm_rel_all,
+      "Angle" = alpha_rel_all,
+      "Distance (using angle)" = d_rel_all
+    )
+  )
   
 }

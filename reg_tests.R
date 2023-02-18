@@ -33,16 +33,15 @@ reg_tests <- function(x,y){
   l1 <- linearHypothesis(dev1, c("(Intercept)=0","log(relv)=1"))
   l2 <- linearHypothesis(dev2, c("(Intercept)=0","relv=1"))
   
-  # Result
-  reg_result <- c(
-    summary(dev1)$r.squared,
-    l1$F[2],
-    round(l1$`Pr(>F)`[2], digits=4),
-    summary(dev2)$r.squared,
-    l2$F[2],
-    round(l2$`Pr(>F)`[2], digits=4)
+   # Return result
+  return(
+    list(
+      "RSquared (log-log)" = summary(dev1)$r.squared,
+      "FStat (log-log)" = l1$F[2],
+      "Pvalue (log-log)" = round(l1$`Pr(>F)`[2], digits=4),
+      "RSquared (level-level)" = summary(dev2)$r.squared,
+      "FStat (level-level)" = l2$F[2],
+      "Pvalue (level-level)" = round(l2$`Pr(>F)`[2], digits=4)
+    )
   )
-  
-  # Return result
-  return(reg_result)
 }
