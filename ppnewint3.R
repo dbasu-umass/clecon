@@ -4,8 +4,7 @@
 # rate of profit for the circulating capital 
 # model using the New Interpretation
 # Marx's labor theory of value and
-# allowing for wage differential across
-# industries
+# allowing for some unproductive industries
 
 ppnewint3 <- function(A, Ap, l, lp, w, v, Q, Qp){
   
