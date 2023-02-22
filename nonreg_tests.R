@@ -13,17 +13,19 @@ nonreg_tests <- function(x,y,w,w_avg,mev,Q){
   # mev: (scalar) monetary expression of value (using gross output)
   # Q (1xn): vector of gross output
   
-  
+  # Remove any zero prices
+  mydat <- data.frame(x=as.vector(x),y=as.vector(y))
+  mydat1 <- mydat[mydat$x!=0, ]
 
   # ---------- Relative vectors (All Combinations) -------- #
   
-  # All relative prices
-  x_all <- combn(x, 2)
-  relp_all <- x_all[1,]/x_all[2,]
+  # All possible relative prices
+  x2 <- combn(mydat1$x, 2)
+  relp_all <- x2[1,]/x2[2,]
   
-  # All relative values
-  y_all <- combn(y, 2)
-  relv_all <- y_all[1,]/y_all[2,]
+  # All possible relative values
+  y2 <- combn(mydat1$y, 2)
+  relv_all <- y2[1,]/y2[2,]
   
   # ------------- Measures ---------------------- #
   # --- RMSE%
