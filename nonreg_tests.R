@@ -13,8 +13,13 @@ nonreg_tests <- function(x,y,w,w_avg,mev,Q){
   # mev: (scalar) monetary expression of value (using gross output)
   # Q (1xn): vector of gross output
   
-  # Remove any zero prices
-  mydat <- data.frame(x=as.vector(x),y=as.vector(y))
+  # Remove observations corresponding to zero prices
+  mydat <- data.frame(
+    x=as.vector(x),
+    y=as.vector(y),
+    w=as.vector(w),
+    Q=as.vector(Q)
+    )
   mydat1 <- mydat[mydat$x!=0, ]
 
   # ---------- Relative vectors (All Combinations) -------- #
@@ -36,17 +41,17 @@ nonreg_tests <- function(x,y,w,w_avg,mev,Q){
   
   # --- Classical distance measure (CDM)
   # Relative wage vector
-  w_rel <- w/w_avg
+  w_rel <- mydat1$w/w_avg
   w_comb <- combn(w_rel, 2)
   rel_w <- w_comb[1,]/w_comb[2,]
   
   # d vector
-  d_j <- w_rel * y
+  d_j <- w_rel * mydat1$y
   d_comb <- combn(d_j, 2)
   rel_d <- d_comb[1,]/d_comb[2,]
   
   # Vector of weights
-  omega_j <- Q/sum(Q)
+  omega_j <- mydat1$Q/sum(mydat1$Q)
   omega_2 <- combn(omega_j, 2)
   rel_omega <- omega_2[1,]*omega_2[2,]
   
