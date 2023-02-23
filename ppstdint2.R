@@ -18,9 +18,6 @@ ppstdint2 <- function(A, l, b, Q, D, K, t){
   # Identity matrix 
   I <- diag(ncol(A))
   
-  # Net output
-  y <- (I-A-D)%*%Q
-  
   # -- Maximum eigenvalue of N
   N <- (K + (A+b%*%l)%*%t)%*%solve(I-A-D-b%*%l)
   maxEigenv <- max(Mod(eigen(N)$values))
