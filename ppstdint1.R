@@ -16,6 +16,12 @@ ppstdint1 <- function(A, l, b, Q){
   # ---- M
   M <- A + b%*%l
   
+  # Is M nonnegative?
+  nn_M <- ifelse(min(M)>=0,1,0)
+  # Is M irreducible?
+  require(popdemo)
+  ir_M <- ifelse(popdemo::isIrreducible(M),1,0)
+  
   # ---- Uniform rate of profit
   maxEigenv <- max(Mod(eigen(M)$values))
   r <- (1/maxEigenv)-1
@@ -47,7 +53,10 @@ ppstdint1 <- function(A, l, b, Q){
               "Prices of Production (Absolute)" = p_abs,
               "Prices of Production (Relative)" = p_rel,
               "Values" = lambda,
-              "Monetary Expression of Value (Gross)" = mev_gross[1,1])
+              "Monetary Expression of Value (Gross)" = mev_gross[1,1],
+              "M: Nonnegative (1=Y,0=N)" = nn_M,
+              "M: Irreducible (1=Y,0=N)" = ir_M
+              )
   )
 }
 
