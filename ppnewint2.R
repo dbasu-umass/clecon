@@ -25,6 +25,12 @@ ppnewint2 <- function(A, l, w, v, Q){
   # -- Maximum eigenvalue of A
   maxEigenv <- max(Mod(eigen(A)$values))
   
+  # Is A nonnegative?
+  nn_A <- ifelse(min(A)>=0,1,0)
+  # Is A irreducible?
+  require(popdemo)
+  ir_A <- ifelse(popdemo::isIrreducible(A),1,0)
+  
   # -- Maximum rate of profit
   R <- (1/maxEigenv)-1
   
@@ -66,7 +72,10 @@ ppnewint2 <- function(A, l, w, v, Q){
               "Prices of Production (Relative)" = p_abs/p_abs[1],
               "Values" = lambda,
               "Monetary Expression of Value" = mev[1,1],
-              "Monetary Expression of Value (Gross)" = mev_gross[1,1])
+              "Monetary Expression of Value (Gross)" = mev_gross[1,1],
+              "A: Nonnegative (1=Y,0=N)" = nn_A,
+              "A: Irreducible (1=Y,0=N)" = ir_A
+              )
   )
   
 }
