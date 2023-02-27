@@ -13,9 +13,15 @@ ppsraffa1 <- function(A, l, Q, w, pshare){
   # w: average wage rate (scalar)
   # pshare : profit share (scalar)
   
-  # ---- M
+  # ---- H
   I <- diag(ncol(A))
   H <- A%*%solve(I-A)
+  
+  # Is H nonnegative?
+  nn_H <- ifelse(min(H)>=0,1,0)
+  # Is H irreducible?
+  require(popdemo)
+  ir_H <- ifelse(popdemo::isIrreducible(H),1,0)
   
   # ---- Maximal rate of profit
   maxEigenv <- max(Mod(eigen(H)$values))
@@ -37,6 +43,9 @@ ppsraffa1 <- function(A, l, Q, w, pshare){
               "Maximal Rate of Profit" = R,
               "Prices of Production (Absolute)" = p_abs,
               "Values" = lambda,
-              "Monetary Expression of Value (Gross)" = mev_gross[1,1])
+              "Monetary Expression of Value (Gross)" = mev_gross[1,1],
+              "H: Nonnegative (1=Y,0=N)" = nn_H,
+              "H: Irreducible (1=Y,0=N)" = ir_H
+              )
   )
 }
