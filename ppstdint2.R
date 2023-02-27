@@ -22,6 +22,12 @@ ppstdint2 <- function(A, l, b, Q, D, K, t){
   N <- (K + (A+b%*%l)%*%t)%*%solve(I-A-D-b%*%l)
   maxEigenv <- max(Mod(eigen(N)$values))
   
+  # Is N nonnegative?
+  nn_N <- ifelse(min(N)>=0,1,0)
+  # Is N irreducible?
+  require(popdemo)
+  ir_N <- ifelse(popdemo::isIrreducible(N),1,0)
+  
   # -- Uniform rate of profit
   r <- (1/maxEigenv)
   
@@ -53,7 +59,9 @@ ppstdint2 <- function(A, l, b, Q, D, K, t){
               "Uniform Rate of Profit" = r,
               "Prices of Production (Absolute)" = p_abs,
               "Values" = lambda,
-              "Monetary Expression of Value (Gross)" = mev[1,1])
-  )
+              "Monetary Expression of Value (Gross)" = mev[1,1]),
+              "N: Nonnegative (1=Y,0=N)" = nn_N,
+              "N: Irreducible (1=Y,0=N)" = ir_N
+              )
   
 }
