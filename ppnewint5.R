@@ -26,6 +26,12 @@ ppnewint5 <- function(A, l, w, v, Q, D, K, t){
   N <- (K + A%*%t)%*%solve(I-A-D)
   maxEigenv <- max(Mod(eigen(N)$values))
   
+  # Is N nonnegative?
+  nn_N <- ifelse(min(N)>=0,1,0)
+  # Is N irreducible?
+  require(popdemo)
+  ir_N <- ifelse(popdemo::isIrreducible(N),1,0)
+  
   # -- Maximum rate of profit
   R <- (1/maxEigenv)
   
@@ -63,7 +69,10 @@ ppnewint5 <- function(A, l, w, v, Q, D, K, t){
               "Uniform Rate of Profit" = r,
               "Prices of Production (Absolute)" = p_abs,
               "Values" = lambda,
-              "Monetary Expression of Value" = mev[1,1])
+              "Monetary Expression of Value" = mev[1,1],
+              "N: Nonnegative (1=Y,0=N)" = nn_N,
+              "N: Irreducible (1=Y,0=N)" = ir_N
+              )
   )
   
 }
