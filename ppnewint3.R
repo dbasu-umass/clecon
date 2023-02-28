@@ -2,23 +2,25 @@
 # labor values, the vector of 
 # price of production and the uniform 
 # rate of profit for the circulating capital 
-# model using the New Interpretation
+# model using the New Interpretation of
 # Marx's labor theory of value and
 # allowing for some unproductive industries
+# and using a uniform wage rate
 
-ppnewint3 <- function(A, Ap, l, lp, w, v, Q, Qp){
+ppnewint3 <- function(A, Ap, l, lp, w, v, Q, Qp, lp_simple){
   
   # -- Inputs to the function
   # A (nxn): input output matrix
   # Ap (mxm): input output matrix for productive sectors
   # l (1Xn): direct labor vector
-  # lp (1Xm): direct labor vector for productive sectors
+  # lp (1Xm): direct labor vector for productive sectors (not adjusted for complexity)
+  # lp_simple (1Xm): direct labor vector for productive sectors (adjusted for complexity)
   # w: average wage rate (scalar)
   # v: value of labor power (scalar)
   # Q (nx1): gross output vector
   # Qp (mx1): gross output vector for productive sectors
   
-
+  # Necessary condition for solutions
   if(v>=(lp%*%Qp)/(l%*%Q)){
     stop("Uniform rate of profit cannot be computed")
   } else{
@@ -61,12 +63,14 @@ ppnewint3 <- function(A, Ap, l, lp, w, v, Q, Qp){
     p_abs <- (1+r)*(w*l)%*%solve(I-(1+r)*A)
     
     # Vector of values 
-    lambda <- lp%*%solve(Ip - Ap)
+    # Note: we use the labor input adjusted for complexity
+    lambda <- lp_simple%*%solve(Ip - Ap)
+    colnames(lambda) <- colnames(lp_simple)
     
     # MEV
     mev <- (p_abs%*%y)/(lp %*%Qp)
     
-    
+    # Results as a list
     return(list("Max Eigen Value (A)" = maxEigenv,
                 "Maximal Rate of Profit" = R,
                 "Uniform Rate of Profit" = r,
@@ -77,8 +81,8 @@ ppnewint3 <- function(A, Ap, l, lp, w, v, Q, Qp){
                 "A: Nonnegative (1=Y,0=N)" = nn_A,
                 "A: Irreducible (1=Y,0=N)" = ir_A
                 )
-    )
-  }
+          )
+  } # end of if else statement
   
   
 }
