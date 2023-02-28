@@ -30,7 +30,7 @@ ppstdint1 <- function(A, l, b, Q, l_simple){
   r <- (1/maxEigenv)-1
   
   # -- Maximal rate of profit (when b is the 0 vector)
-  R <- 1/(max(Mod(eigen(A)$values)))
+  R <- 1/(max(Mod(eigen(A)$values)))-1
   
   # ---- Relative price of production vector
   # First column of eigenvector matrix of M
