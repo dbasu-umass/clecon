@@ -11,7 +11,7 @@ ppnewint5 <- function(A, l, w, v, Q, D, K, t, l_simple){
   # -- Inputs for the function
   # A (nxn): input output matrix
   # l (1Xn): direct labor vector (not adjusted for complexity)
-  # l_simple (1xn): direct labor inputs (unadjusted for complexity)
+  # l_simple (1xn): direct labor inputs (adjusted for complexity)
   # w: average wage rate (scalar)
   # v: value of labor power (scalar)
   # Q (nx1): gross output vector
@@ -63,6 +63,7 @@ ppnewint5 <- function(A, l, w, v, Q, D, K, t, l_simple){
   # Vector of values 
   # Note: we use the labor input adjusted for complexity
   lambda <- l_simple%*%solve(I - A -D)
+  colnames(lambda) <- colnames(l_simple)
   
   # MEV
   mev <- (p_abs%*%y)/(l %*%Q)
