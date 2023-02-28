@@ -3,13 +3,16 @@
 # price of production and the uniform 
 # rate of profit for the circulating capital 
 #  model using the New Interpretation
-# Marx's labor theory of value
+# Marx's labor theory of value with
+# a uniform wage rate and no unproductive
+# sectors
 
-ppnewint1 <- function(A, l, w, v, Q){
+ppnewint1 <- function(A, l, w, v, Q, l_simple){
   
   # -- Inputs to the function
   # A (nxn): input output matrix
-  # l (1Xn): direct labor vector
+  # l (1Xn): direct labor vector (not adjusted for complexity)
+  # l_simple (1xn): direct labor inputs (unadjusted for complexity)
   # w: average wage rate (scalar)
   # v: value of labor power (scalar)
   # Q (nx1): gross output vector
@@ -53,8 +56,9 @@ ppnewint1 <- function(A, l, w, v, Q){
   colnames(p_abs) <- colnames(l)
   
   # Vector of values 
-  lambda <- l%*%solve(I - A)
-  colnames(lambda) <- colnames(l)
+  # Note: we use the labor input adjusted for complexity
+  lambda <- l_simple%*%solve(I - A)
+  colnames(lambda) <- colnames(l_simple)
   
   # MEV
   mev <- (p_abs%*%y)/(l %*%Q)
@@ -62,7 +66,7 @@ ppnewint1 <- function(A, l, w, v, Q){
   # Monetary expression of value (using gross output)
   mev_gross <- (p_abs%*%Q)/(lambda%*%Q)
   
-  
+  # Results as a list
   return(list("Max Eigen Value (A)" = maxEigenv,
               "Maximal Rate of Profit" = R,
               "Uniform Rate of Profit" = r,
@@ -74,6 +78,6 @@ ppnewint1 <- function(A, l, w, v, Q){
               "A: Nonnegative (1=Y,0=N)" = nn_A,
               "A: Irreducible (1=Y,0=N)" = ir_A
               )
-  )
+        )
   
 }
