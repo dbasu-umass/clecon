@@ -3,12 +3,15 @@
 # price of production and the uniform 
 # rate of profit for the model with capital 
 # stock using the New Interpretation
+# with a uniform wage rate and no
+# unproductive sectors
 
-ppnewint5 <- function(A, l, w, v, Q, D, K, t){
+ppnewint5 <- function(A, l, w, v, Q, D, K, t, l_simple){
   
   # -- Inputs for the function
   # A (nxn): input output matrix
-  # l (1Xn): direct labor vector
+  # l (1Xn): direct labor vector (not adjusted for complexity)
+  # l_simple (1xn): direct labor inputs (unadjusted for complexity)
   # w: average wage rate (scalar)
   # v: value of labor power (scalar)
   # Q (nx1): gross output vector
@@ -58,12 +61,13 @@ ppnewint5 <- function(A, l, w, v, Q, D, K, t){
   p_abs <- (w*l + r*w*l%*%t)%*%solve(I - A - D -r*K - r*A%*%t)
   
   # Vector of values 
-  lambda <- l%*%solve(I - A -D)
+  # Note: we use the labor input adjusted for complexity
+  lambda <- l_simple%*%solve(I - A -D)
   
   # MEV
   mev <- (p_abs%*%y)/(l %*%Q)
   
-  
+  # Results as a list
   return(list("Max Eigen Value (N)" = maxEigenv,
               "Maximal Rate of Profit" = R,
               "Uniform Rate of Profit" = r,
@@ -73,7 +77,6 @@ ppnewint5 <- function(A, l, w, v, Q, D, K, t){
               "N: Nonnegative (1=Y,0=N)" = nn_N,
               "N: Irreducible (1=Y,0=N)" = ir_N
               )
-  )
+        )
   
 }
-
