@@ -29,6 +29,9 @@ ppstdint1 <- function(A, l, b, Q, l_simple){
   maxEigenv <- max(Mod(eigen(M)$values))
   r <- (1/maxEigenv)-1
   
+  # -- Maximal rate of profit (when b is the 0 vector)
+  R <- 1/(max(Mod(eigen(A)$values)))
+  
   # ---- Relative price of production vector
   # First column of eigenvector matrix of M
   # The vector has all real elements (of the same sign)
@@ -54,6 +57,7 @@ ppstdint1 <- function(A, l, b, Q, l_simple){
   # ----- Results as a list
   return(list("Max Eigen Value (M)" = maxEigenv,
               "Uniform Rate of Profit" = r,
+              "Maximal Rate of Profit" = R,
               "Prices of Production (Absolute)" = p_abs,
               "Prices of Production (Relative)" = p_rel,
               "Values" = lambda,
