@@ -12,7 +12,7 @@ ppnewint2 <- function(A, l, w, v, Q, l_simple){
   # -- Inputs to the function
   # A (nxn): input output matrix
   # l (1Xn): direct labor vector (not adjusted for complexity)
-  # l_simple (1xn): direct labor inputs (unadjusted for complexity)
+  # l_simple (1xn): direct labor inputs (adjusted for complexity)
   # w (1xn): nominal wage rate vector
   # v: value of labor power (scalar)
   # Q (nx1): gross output vector
