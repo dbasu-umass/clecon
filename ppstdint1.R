@@ -2,14 +2,17 @@
 # labor values, the vector of 
 # price of production and the uniform 
 # rate of profit for the circulating capital 
-#  model using the Standard Interpretation
-# Marx's labor theory of value
+# model using the Standard Interpretation
+# of Marx's labor theory of value
+# with uniform wage rates and no
+# unproductive industries
 
-ppstdint1 <- function(A, l, b, Q){
+ppstdint1 <- function(A, l, b, Q, l_simple){
   
   # -- Inputs to the function
   # A (nxn): input output matrix
-  # l (1xn): direct labor vector
+  # l (1xn): direct labor vector (not adjusted for complexity)
+  # l_simple (1xn): direct labor vector (adjusted for complexity)
   # b (nx1): real wage vector
   # Q (nx1): gross output vector
   
@@ -32,9 +35,10 @@ ppstdint1 <- function(A, l, b, Q){
   p_rel <- Re(eigen(M)$vectors[,1])
   
   # ---- Vector of values 
+  # Note: we use the labor input adjusted for complexity
   I <- diag(ncol(A))
-  lambda <- l%*%solve(I - A)
-  colnames(lambda) <- colnames(l)
+  lambda <- l_simple%*%solve(I - A)
+  colnames(lambda) <- colnames(l_simple)
   
   # Normalization using gross output
   mev <- (p_rel%*%Q)/(lambda%*%Q)
@@ -47,7 +51,7 @@ ppstdint1 <- function(A, l, b, Q){
   # Monetary expression of value (using gross output)
   mev_gross <- (p_abs%*%Q)/(lambda%*%Q)
   
-  # ----- Output of function
+  # ----- Results as a list
   return(list("Max Eigen Value (M)" = maxEigenv,
               "Uniform Rate of Profit" = r,
               "Prices of Production (Absolute)" = p_abs,
@@ -57,6 +61,6 @@ ppstdint1 <- function(A, l, b, Q){
               "M: Nonnegative (1=Y,0=N)" = nn_M,
               "M: Irreducible (1=Y,0=N)" = ir_M
               )
-  )
+        )
 }
 
