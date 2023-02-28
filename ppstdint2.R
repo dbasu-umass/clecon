@@ -3,12 +3,15 @@
 # price of production and the uniform 
 # rate of profit for the model with capital 
 # stock using the Standard Interpretation
+# with a uniform wage rate and no
+# unproductive industries
 
-ppstdint2 <- function(A, l, b, Q, D, K, t){
+ppstdint2 <- function(A, l, b, Q, D, K, t, l_simple){
   
   # -- Inputs for the function
   # A (nxn): input output matrix
-  # l (1Xn): direct labor vector
+  # l (1Xn): direct labor vector (not adjusted for complexity)
+  # l_simple (1Xn): direct labor vector (adjusted for complexity)
   # b (nx1): vector of consumption
   # Q (nx1): gross output vector
   # D (nxn): depreciation matrix
@@ -41,8 +44,9 @@ ppstdint2 <- function(A, l, b, Q, D, K, t){
   p_rel <- Re(eigen(N)$vectors[,1])
   
   # Vector of values 
-  lambda <- l%*%solve(I - A -D)
-  colnames(lambda) <- colnames(l)
+  # Note: we use the labor input adjusted for complexity
+  lambda <- l_simple%*%solve(I - A -D)
+  colnames(lambda) <- colnames(l_simple)
   
   # Normalization using gross output
   mev_num <- (matrix(p_rel,nrow=1)%*%matrix(Q,ncol=1))
@@ -53,7 +57,7 @@ ppstdint2 <- function(A, l, b, Q, D, K, t){
   p_abs <- mev[1,1]*matrix(p_rel,nrow=1)
   colnames(p_abs) <- colnames(l)
   
-  
+  # Results as a list
   return(list("Max Eigen Value (N)" = maxEigenv,
               "Maximal Rate of Profit" = R,
               "Uniform Rate of Profit" = r,
