@@ -59,9 +59,10 @@ ppstdint2 <- function(A, l, b, Q, D, K, t){
               "Uniform Rate of Profit" = r,
               "Prices of Production (Absolute)" = p_abs,
               "Values" = lambda,
-              "Monetary Expression of Value (Gross)" = mev[1,1]),
+              "Monetary Expression of Value (Gross)" = mev[1,1],
               "N: Nonnegative (1=Y,0=N)" = nn_N,
               "N: Irreducible (1=Y,0=N)" = ir_N
               )
+        )
   
 }
