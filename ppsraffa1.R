@@ -4,11 +4,12 @@
 # rate of profit for the circulating capital 
 #  model using the Sraffian approach
 
-ppsraffa1 <- function(A, l, Q, w, pshare){
+ppsraffa1 <- function(A, l, Q, w, pshare, l_simple){
   
   # -- Inputs to the function
   # A (nxn): input output matrix
   # l (1xn): direct labor vector
+  # l_simple (1xn): direct labor vector (adjusted for complexity)
   # Q (nx1): gross output vector
   # w: average wage rate (scalar)
   # pshare : profit share (scalar)
@@ -28,7 +29,7 @@ ppsraffa1 <- function(A, l, Q, w, pshare){
   R <- (1/maxEigenv)
   
   # ---- Vector of values 
-  lambda <- l%*%solve(I - A)
+  lambda <- l_simple%*%solve(I - A)
   colnames(lambda) <- colnames(l)
   
   # ---- Price of production vector
@@ -46,6 +47,6 @@ ppsraffa1 <- function(A, l, Q, w, pshare){
               "Monetary Expression of Value (Gross)" = mev_gross[1,1],
               "H: Nonnegative (1=Y,0=N)" = nn_H,
               "H: Irreducible (1=Y,0=N)" = ir_H
-              )
+  )
   )
 }
