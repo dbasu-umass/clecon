@@ -28,6 +28,9 @@ ppsraffa1 <- function(A, l, Q, w, pshare, l_simple){
   maxEigenv <- max(Mod(eigen(H)$values))
   R <- (1/maxEigenv)
   
+  # ---- Uniform rate of profit
+  r <- pshare*R
+  
   # ---- Vector of values 
   lambda <- l_simple%*%solve(I - A)
   colnames(lambda) <- colnames(l)
@@ -42,6 +45,7 @@ ppsraffa1 <- function(A, l, Q, w, pshare, l_simple){
   # ----- Output of function
   return(list("Max Eigen Value (H)" = maxEigenv,
               "Maximal Rate of Profit" = R,
+              "Uniform Rate of Profit" = r,
               "Prices of Production (Absolute)" = p_abs,
               "Values" = lambda,
               "Monetary Expression of Value (Gross)" = mev_gross[1,1],
