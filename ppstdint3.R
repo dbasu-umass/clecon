@@ -35,10 +35,17 @@ ppstdint3 <- function(A, Ap, l, b, Q, Qp, lp_simple){
   # -- Maximal rate of profit (when b is the 0 vector)
   R <- 1/(max(Mod(eigen(A)$values)))-1
   
-  # ---- Relative price of production vector
-  # First column of eigenvector matrix of M
+  # ----- Solve for price of production vector
+  # Rel Price = First column of eigen vector matrix of M
   # The vector has all real elements (of the same sign)
-  p_rel <- Re(eigen(M)$vectors[,1])
+  # If all elements <0, multiply with -1
+  p_rel_neg <- (-1)*Re(eigen(M)$vectors[,1])
+  p_rel_pos <- Re(eigen(M)$vectors[,1])
+  if (Re(eigen(M)$vectors[1,1])<0) {
+    p_rel <- p_rel_neg
+  }else{
+    p_rel <- p_rel_pos
+  }
   
   # ---- Vector of values (for productive sectors only)
   # Note: we use the labor input adjusted for complexity
