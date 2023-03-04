@@ -7,7 +7,7 @@
 # with uniform wage rates and allowing for
 # unproductive industries
 
-ppstdint1 <- function(A, Ap, l, b, Q, Qp, lp_simple){
+ppstdint3 <- function(A, Ap, l, b, Q, Qp, lp_simple){
   
   # -- Inputs to the function
   # A (nxn): input output matrix
