@@ -39,9 +39,16 @@ ppstdint2 <- function(A, l, b, Q, D, K, t, l_simple){
   R <- 1/(max(Mod(eigen(M)$values)))
   
   # ----- Solve for price of production vector
-  # First column of eigenvector matrix of N
+  # Rel Price = First column of eigen vector matrix of N
   # The vector has all real elements (of the same sign)
-  p_rel <- Re(eigen(N)$vectors[,1])
+  # If all elements <0, multiply with -1
+  p_rel_neg <- (-1)*Re(eigen(N)$vectors[,1])
+  p_rel_pos <- Re(eigen(N)$vectors[,1])
+  if (Re(eigen(N)$vectors[1,1])<0) {
+    p_rel <- p_rel_neg
+  }else{
+    p_rel <- p_rel_pos
+  }
   
   # Vector of values 
   # Note: we use the labor input adjusted for complexity
