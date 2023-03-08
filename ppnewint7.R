@@ -24,7 +24,7 @@ ppnewint7 <- function(A, Ap, l, lp, w, v, Q, Qp, D, Dp, K, t, lp_simple){
   # t (nxn): turnover diagonal matrix
   
   # Necessary condition for solutions
-  if(v>=(lp%*%Qp)/(l%*%Q)){
+  if(v>=(lp_simple%*%Qp)/(l%*%Q)){
     stop("Uniform rate of profit cannot be computed")
   } else{
     # Identity matrix 
@@ -57,7 +57,7 @@ ppnewint7 <- function(A, Ap, l, lp, w, v, Q, Qp, D, Dp, K, t, lp_simple){
       C1 <- (w*l + r2*w*l%*%t)
       
       return(
-        (C1%*%B1%*%y) - ((w*lp)%*%Qp)/v
+        (C1%*%B1%*%y) - ((w*lp_simple)%*%Qp)/v
       )
     }
     
