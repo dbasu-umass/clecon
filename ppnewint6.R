@@ -20,8 +20,8 @@ ppnewint6 <- function(A, l, w, v, Q, D, K, t, l_simple){
   # t (nxn): turnover diagonal matrix
   
   # Necessary conditon (v<1)
-  if(v>=1){
-    stop("VLP>=1; Uniform rate of profit cannot be computed")
+  if(v>=(l_simple%*%diag(w)%*%Q)/(l%*%diag(w)%*%Q)){
+    stop("Uniform rate of profit cannot be computed")
   } else{
     
     # Identity matrix 
@@ -53,7 +53,7 @@ ppnewint6 <- function(A, l, w, v, Q, D, K, t, l_simple){
       C1 <- (l%*%diag(w) + r2*l%*%diag(w)%*%t)
       
       return(
-        (C1%*%B1%*%y) - ((l%*%diag(w))%*%Q)/v
+        (C1%*%B1%*%y) - ((l_simple%*%diag(w))%*%Q)/v
       )
     }
     
