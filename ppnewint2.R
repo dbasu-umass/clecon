@@ -18,7 +18,7 @@ ppnewint2 <- function(A, l, w, v, Q, l_simple){
   # Q (nx1): gross output vector
   
   # Necessary conditon (v<1)
-  if(v>=1){
+  if(v>=(l_simple%*%Q)/(l%*%Q)){
     stop("VLP>=1; Uniform rate of profit cannot be computed")
   } else{
     
