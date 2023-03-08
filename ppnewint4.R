@@ -22,7 +22,7 @@ ppnewint4 <- function(A, Ap, l, lp, w, wp, v, Q, Qp, lp_simple){
   # Qp (mx1): gross output vector for productive sectors
   
   # Necessary condition for existence of solution
-  if(v>=(lp%*%(diag(wp))%*%Qp)/(l%*%(diag(w))%*%Q)){
+  if(v>=(lp_simple%*%(diag(wp))%*%Qp)/(l%*%(diag(w))%*%Q)){
     stop("Uniform rate of profit cannot be computed")
   } else{
     
@@ -52,7 +52,7 @@ ppnewint4 <- function(A, Ap, l, lp, w, wp, v, Q, Qp, lp_simple){
     myfunc <- function(r2){
       
       return(
-        (1+r2)*(l%*%diag(w))%*%(solve(I-(1+r2)*A))%*%y - ((lp%*%diag(wp))%*%Qp)/v
+        (1+r2)*(l%*%diag(w))%*%(solve(I-(1+r2)*A))%*%y - ((lp_simple%*%diag(wp))%*%Qp)/v
       )
     }
     
