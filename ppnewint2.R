@@ -18,7 +18,7 @@ ppnewint2 <- function(A, l, w, v, Q, l_simple){
   # Q (nx1): gross output vector
   
   # Necessary conditon (v<1)
-  if(v>=(l_simple%*%Q)/(l%*%Q)){
+  if(v>=(l_simple%*%diag(w)%*%Q)/(l%*%diag(w)%*%Q)){
     stop("VLP>=1; Uniform rate of profit cannot be computed")
   } else{
     
@@ -47,7 +47,7 @@ ppnewint2 <- function(A, l, w, v, Q, l_simple){
     myfunc <- function(r2){
       
       return(
-        (1+r2)*(l%*%diag(w))%*%solve(I-(1+r2)*A)%*%y - ((l%*%diag(w))%*%Q)/v
+        (1+r2)*(l%*%diag(w))%*%solve(I-(1+r2)*A)%*%y - ((l_simple%*%diag(w))%*%Q)/v
       )
     }
     
