@@ -21,7 +21,7 @@ ppnewint3 <- function(A, Ap, l, lp, w, v, Q, Qp, lp_simple){
   # Qp (mx1): gross output vector for productive sectors
   
   # Necessary condition for solutions
-  if(v>=(lp%*%Qp)/(l%*%Q)){
+  if(v>=(lp_simple%*%Qp)/(l%*%Q)){
     stop("Uniform rate of profit cannot be computed")
   } else{
     
