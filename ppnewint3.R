@@ -50,7 +50,7 @@ ppnewint3 <- function(A, Ap, l, lp, w, v, Q, Qp, lp_simple){
     myfunc <- function(r2){
       
       return(
-        (1+r2)*l%*%(solve(I-(1+r2)*A))%*%y - (lp%*%Qp)/v
+        (1+r2)*l%*%(solve(I-(1+r2)*A))%*%y - (lp_simple%*%Qp)/v
       )
     }
     
