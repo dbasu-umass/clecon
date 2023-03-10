@@ -17,9 +17,9 @@ ppnewint1 <- function(A, l, w, v, Q, l_simple){
   # v: value of labor power (scalar)
   # Q (nx1): gross output vector
   
-  # Necessary conditon (v<1)
+  # Necessary condition
   if(v>=(l_simple%*%Q)/(l%*%Q)){
-    stop("VLP>=1; Uniform rate of profit cannot be computed")
+    stop("Necessary condition violated. Uniform rate of profit cannot be computed")
   } else{
     
     # Identity matrix 
@@ -54,7 +54,7 @@ ppnewint1 <- function(A, l, w, v, Q, l_simple){
     # Find root to get uniform rate of profit
     # Note: upper bound should be kept less than
     # R because the function blows up at R
-    r <- uniroot(myfunc,c(0,R-0.01))$root
+    r <- uniroot(myfunc,c(0,(R-0.00001)))$root
     
     # ----- Solve for price of production vector
     p_abs <- (1+r)*(w*l)%*%solve(I-(1+r)*A)
@@ -82,8 +82,8 @@ ppnewint1 <- function(A, l, w, v, Q, l_simple){
                 "Monetary Expression of Value (Gross)" = mev_gross[1,1],
                 "A: Nonnegative (1=Y,0=N)" = nn_A,
                 "A: Irreducible (1=Y,0=N)" = ir_A
-    )
-    )
+              )
+      )
   }
   
   
