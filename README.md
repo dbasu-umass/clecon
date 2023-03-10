@@ -8,8 +8,9 @@ A suite of functions, examples and data sets for conducting classical economic a
 
 - `ppsraffa1`: Compute values and prices of production for the circulating capital model using the Sraffian approach
 - `ppstdint1`: Compute values and prices of production for the circulating capital model using the Standard Interpretation of Marx's labor theory of value (uniform wage rates and no unproductive industries)
-- `ppstdint2`: Compute values and prices of production for the model with capital stock using the Standard Interpretation of Marx's labor theory of value (uniform wage rates and no unproductive industries)
-- `ppnewint1`: Compute values and prices of production for the circulating capital model using the New Interpretation of Marx's labor theory of value
+- `ppstdint2`: Compute values and prices of production for the circulating capital model using the Standard Interpretation of Marx's labor theory of value (uniform wage rates and allowing for unproductive industries)
+- `ppstdint3`: Compute values and prices of production for the model with capital stock using the Standard Interpretation of Marx's labor theory of value (uniform wage rates and no unproductive industries)
+- `ppnewint1`: Compute values and prices of production for the circulating capital model using the New Interpretation of Marx's labor theory of value (uniform wage rates and no unproductive industries)
 - `ppnewint2`: Compute values and prices of production for the circulating capital model using the New Interpretation of Marx's labor theory of value (wage differentials and no unproductive industries)
 - `ppnewint3`: Compute values and prices of production for the circulating capital model using the New Interpretation of Marx's labor theory of value (uniform wage rates and allowing for unproductive industries)
 - `ppnewint4`: Compute values and prices of production for the circulating capital model using the New Interpretation of Marx's labor theory of value (wage differentials and allowing for unproductive industries)
