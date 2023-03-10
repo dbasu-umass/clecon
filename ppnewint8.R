@@ -26,7 +26,7 @@ ppnewint7 <- function(A, Ap, l, lp, w, wp, v, Q, Qp, D, Dp, K, t, lp_simple){
   
   # Necessary condition for solutions
   if(v>=(lp_simple%*%(diag(wp))%*%Qp)/(l%*%(diag(w))%*%Q)){
-    stop("Uniform rate of profit cannot be computed")
+    stop("Necessary condition violated. Uniform rate of profit cannot be computed")
   } else{
     # Identity matrix 
     I <- diag(ncol(A))
@@ -65,7 +65,7 @@ ppnewint7 <- function(A, Ap, l, lp, w, wp, v, Q, Qp, D, Dp, K, t, lp_simple){
     # Find root to get uniform rate of profit
     # Note: upper bound should be kept less than
     # R because the function blows up at R
-    r <- uniroot(myfunc,c(0,R-0.01))$root
+    r <- uniroot(myfunc,c(0,(R-0.00001)))$root
     
     # ----- Solve for price of production vector
     p_abs <- (l%*%diag(w) + r*l%*%diag(w)%*%t)%*%solve(I - A - D -r*K - r*A%*%t)
@@ -87,8 +87,8 @@ ppnewint7 <- function(A, Ap, l, lp, w, wp, v, Q, Qp, D, Dp, K, t, lp_simple){
                 "Monetary Expression of Value" = mev[1,1],
                 "N: Nonnegative (1=Y,0=N)" = nn_N,
                 "N: Irreducible (1=Y,0=N)" = ir_N
-    )
-    )
+              )
+          )
     
   } # end of if else statement
   
