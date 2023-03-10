@@ -1,80 +1,79 @@
 # Function to compute the vector of 
 # labor values, the vector of 
 # price of production and the uniform 
-# rate of profit for the circulating capital 
-# model using the Standard Interpretation
-# of Marx's labor theory of value
-# with uniform wage rates and allowing for
+# rate of profit for the model with capital 
+# stock using the Standard Interpretation
+# with a uniform wage rate and no
 # unproductive industries
 
-ppstdint3 <- function(A, Ap, l, b, Q, Qp, lp_simple){
+ppstdint3 <- function(A, l, b, Q, D, K, t, l_simple){
   
-  # -- Inputs to the function
+  # -- Inputs for the function
   # A (nxn): input output matrix
-  # Ap (mxm): input output matrix for productive industries
-  # l (1xn): direct labor vector (not adjusted for complexity)
-  # l_simple (1xn): direct labor vector (adjusted for complexity)
-  # lp_simple (1xn): direct labor vector for productive industries (adjusted for complexity)
-  # b (nx1): real wage vector
+  # l (1Xn): direct labor vector (not adjusted for complexity)
+  # l_simple (1Xn): direct labor vector (adjusted for complexity)
+  # b (nx1): vector of consumption
   # Q (nx1): gross output vector
-  # Qp (mx1): gross output vector for productive industries
+  # D (nxn): depreciation matrix
+  # K (nxn): capital stock coefficient matrix
+  # t (nxn): turnover diagonal matrix
   
-  # ---- M
-  M <- A + b%*%l
+  # Identity matrix 
+  I <- diag(ncol(A))
   
-  # Is M nonnegative?
-  nn_M <- ifelse(min(M)>=0,1,0)
-  # Is M irreducible?
+  # -- Maximum eigenvalue of N
+  N <- (K + (A+b%*%l)%*%t)%*%solve(I-A-D-b%*%l)
+  maxEigenv <- max(Mod(eigen(N)$values))
+  
+  # Is N nonnegative?
+  nn_N <- ifelse(min(N)>=0,1,0)
+  # Is N irreducible?
   require(popdemo)
-  ir_M <- ifelse(popdemo::isIrreducible(M),1,0)
+  ir_N <- ifelse(popdemo::isIrreducible(N),1,0)
   
-  # ---- Uniform rate of profit
-  maxEigenv <- max(Mod(eigen(M)$values))
-  r <- (1/maxEigenv)-1
+  # -- Uniform rate of profit
+  r <- (1/maxEigenv)
   
   # -- Maximal rate of profit (when b is the 0 vector)
-  R <- 1/(max(Mod(eigen(A)$values)))-1
+  M <- (K + (A)%*%t)%*%solve(I-A-D)
+  R <- 1/(max(Mod(eigen(M)$values)))
   
   # ----- Solve for price of production vector
-  # Rel Price = First column of eigen vector matrix of M
+  # Rel Price = First column of eigen vector matrix of N
   # The vector has all real elements (of the same sign)
   # If all elements <0, multiply with -1
-  p_rel_neg <- (-1)*Re(eigen(M)$vectors[,1])
-  p_rel_pos <- Re(eigen(M)$vectors[,1])
-  if (Re(eigen(M)$vectors[1,1])<0) {
+  p_rel_neg <- (-1)*Re(eigen(N)$vectors[,1])
+  p_rel_pos <- Re(eigen(N)$vectors[,1])
+  if (Re(eigen(N)$vectors[1,1])<0) {
     p_rel <- p_rel_neg
   }else{
     p_rel <- p_rel_pos
   }
   
-  # ---- Vector of values (for productive sectors only)
+  # Vector of values 
   # Note: we use the labor input adjusted for complexity
-  Ip <- diag(ncol(Ap))
-  lambda_p <- lp_simple%*%solve(Ip - Ap)
-  colnames(lambda_p) <- colnames(lp_simple)
+  lambda <- l_simple%*%solve(I - A -D)
+  colnames(lambda) <- colnames(l_simple)
   
   # Normalization using gross output
-  mev <- (p_rel%*%Q)/(lambda_p%*%Qp)
+  mev_num <- (matrix(p_rel,nrow=1)%*%matrix(Q,ncol=1))
+  mev_den <- (matrix(lambda,nrow=1)%*%matrix(Q,ncol=1))
+  mev <- mev_num/mev_den
   
   # ----- Absolute price of production vector
   p_abs <- mev[1,1]*matrix(p_rel,nrow=1)
   colnames(p_abs) <- colnames(l)
   
-  
-  # Monetary expression of value (using gross output)
-  mev_gross <- (p_abs%*%Q)/(lambda_p%*%Qp)
-  
-  # ----- Results as a list
-  return(list("Max Eigen Value (M)" = maxEigenv,
-              "Uniform Rate of Profit" = r,
+  # Results as a list
+  return(list("Max Eigen Value (N)" = maxEigenv,
               "Maximal Rate of Profit" = R,
+              "Uniform Rate of Profit" = r,
               "Prices of Production (Absolute)" = p_abs,
-              "Prices of Production (Relative)" = p_rel,
-              "Values (Productive Industries)" = lambda_p,
-              "Monetary Expression of Value (Gross)" = mev_gross[1,1],
-              "M: Nonnegative (1=Y,0=N)" = nn_M,
-              "M: Irreducible (1=Y,0=N)" = ir_M
-  )
-  )
+              "Values" = lambda,
+              "Monetary Expression of Value (Gross)" = mev[1,1],
+              "N: Nonnegative (1=Y,0=N)" = nn_N,
+              "N: Irreducible (1=Y,0=N)" = ir_N
+              )
+        )
+  
 }
-
